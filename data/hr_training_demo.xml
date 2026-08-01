@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Users -->
+        <!-- 1. Sarah Chen (Requester) -->
+        <record id="user_sarah_chen" model="res.users">
+            <field name="name">Sarah Chen</field>
+            <field name="login">sarah.chen@example.com</field>
+            <field name="email">sarah.chen@example.com</field>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user'), ref('group_training_requester')])]"/>
+        </record>
+
+        <!-- Grant Admin Training HR Approver access by default -->
+        <record id="base.user_admin" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_training_hr_approver'))]"/>
+        </record>
+
+        <!-- 2. James Patel (Manager) -->
+        <record id="user_james_patel" model="res.users">
+            <field name="name">James Patel</field>
+            <field name="login">james.patel@example.com</field>
+            <field name="email">james.patel@example.com</field>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user'), ref('group_training_manager_approver')])]"/>
+        </record>
+
+        <!-- 3. Dana Vance (HR Approver) -->
+        <record id="user_dana_vance" model="res.users">
+            <field name="name">Dana Vance</field>
+            <field name="login">dana.vance@example.com</field>
+            <field name="email">dana.vance@example.com</field>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user'), ref('group_training_hr_approver')])]"/>
+        </record>
+
+        <!-- Demo Employees -->
+        <!-- Manager Employee Record -->
+        <record id="employee_james_patel" model="hr.employee">
+            <field name="name">James Patel</field>
+            <field name="user_id" ref="user_james_patel"/>
+            <field name="work_email">james.patel@example.com</field>
+        </record>
+
+        <!-- Requester Employee Record (Sarah, managed by James) -->
+        <record id="employee_sarah_chen" model="hr.employee">
+            <field name="name">Sarah Chen</field>
+            <field name="user_id" ref="user_sarah_chen"/>
+            <field name="parent_id" ref="employee_james_patel"/>
+            <field name="work_email">sarah.chen@example.com</field>
+        </record>
+
+        <!-- HR Employee Record -->
+        <record id="employee_dana_vance" model="hr.employee">
+            <field name="name">Dana Vance</field>
+            <field name="user_id" ref="user_dana_vance"/>
+            <field name="work_email">dana.vance@example.com</field>
+        </record>
+
+        <!-- Demo Training Requests -->
+        <!-- 1. Sarah's Draft Request -->
+        <record id="demo_request_draft" model="hr.training.request">
+            <field name="employee_id" ref="employee_sarah_chen"/>
+            <field name="course_name">AWS Certified Solutions Architect</field>
+            <field name="training_provider">AWS Training &amp; Certification</field>
+            <field name="cost">450.00</field>
+            <field name="start_date" eval="(datetime.now() + timedelta(days=14)).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(datetime.now() + timedelta(days=18)).strftime('%Y-%m-%d')"/>
+            <field name="justification">Preparation and examination voucher for AWS Solutions Architect Associate certification to support cloud migration initiative.</field>
+            <field name="state">draft</field>
+        </record>
+
+        <!-- 2. Sarah's second Draft Request -->
+        <record id="demo_request_submitted" model="hr.training.request">
+            <field name="employee_id" ref="employee_sarah_chen"/>
+            <field name="course_name">Certified Information Systems Security Professional (CISSP)</field>
+            <field name="training_provider">ISC2</field>
+            <field name="cost">749.00</field>
+            <field name="start_date" eval="(datetime.now() + timedelta(days=30)).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(datetime.now() + timedelta(days=35)).strftime('%Y-%m-%d')"/>
+            <field name="justification">Essential cybersecurity certification for security auditing and compliance implementation.</field>
+            <field name="state">draft</field>
+        </record>
+
+        <!-- 3. Sarah's third Draft Request -->
+        <record id="demo_request_manager_approved" model="hr.training.request">
+            <field name="employee_id" ref="employee_sarah_chen"/>
+            <field name="course_name">Kubernetes Certified Administrator (CKA)</field>
+            <field name="training_provider">The Linux Foundation</field>
+            <field name="cost">395.00</field>
+            <field name="start_date" eval="(datetime.now() + timedelta(days=45)).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(datetime.now() + timedelta(days=48)).strftime('%Y-%m-%d')"/>
+            <field name="justification">Advanced container orchestration and DevOps skills training.</field>
+            <field name="state">draft</field>
+        </record>
+    </data>
+</odoo>

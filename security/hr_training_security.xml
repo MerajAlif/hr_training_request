@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Security Category -->
+        <record id="module_category_human_resources_training_request" model="ir.module.category">
+            <field name="name">Training Requests</field>
+            <field name="description">Access rights for HR Training Requests module.</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Base Group: Training Requester -->
+        <record id="group_training_requester" model="res.groups">
+            <field name="name">Training Requester</field>
+            <field name="category_id" ref="module_category_human_resources_training_request"/>
+            <field name="comment">Base access to create, submit, and view own training requests.</field>
+        </record>
+
+        <!-- Manager Group: Training Manager Approver -->
+        <record id="group_training_manager_approver" model="res.groups">
+            <field name="name">Training Manager Approver</field>
+            <field name="category_id" ref="module_category_human_resources_training_request"/>
+            <field name="implied_ids" eval="[(4, ref('group_training_requester'))]"/>
+            <field name="comment">Can approve or reject direct reports' training requests.</field>
+        </record>
+
+        <!-- HR Group: Training HR Approver -->
+        <record id="group_training_hr_approver" model="res.groups">
+            <field name="name">Training HR Approver</field>
+            <field name="category_id" ref="module_category_human_resources_training_request"/>
+            <field name="implied_ids" eval="[(4, ref('group_training_manager_approver'))]"/>
+            <field name="comment">Final approval authority for all company training requests.</field>
+        </record>
+
+        <!-- RECORD RULES -->
+
+        <!-- Rule 1: Employee sees only own requests -->
+        <record id="training_request_rule_employee" model="ir.rule">
+            <field name="name">Training Request: Employee Own Records</field>
+            <field name="model_id" ref="model_hr_training_request"/>
+            <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_training_requester'))]"/>
+        </record>
+
+        <!-- Rule 2: Manager sees own + direct reports -->
+        <record id="training_request_rule_manager" model="ir.rule">
+            <field name="name">Training Request: Manager Team Records</field>
+            <field name="model_id" ref="model_hr_training_request"/>
+            <field name="domain_force">
+                ['|', ('employee_id.user_id', '=', user.id),
+                      ('manager_id.user_id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('group_training_manager_approver'))]"/>
+        </record>
+
+        <!-- Rule 3: HR sees all company records -->
+        <record id="training_request_rule_hr" model="ir.rule">
+            <field name="name">Training Request: HR Company-Wide</field>
+            <field name="model_id" ref="model_hr_training_request"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="groups" eval="[(4, ref('group_training_hr_approver'))]"/>
+        </record>
+    </data>
+</odoo>

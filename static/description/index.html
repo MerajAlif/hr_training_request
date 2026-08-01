@@ -1,0 +1,77 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">HR Training Request</h2>
+        <h3 class="oe_slogan">Streamline external employee training & certifications with a two-step approval workflow</h3>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="oe_slogan" style="color:#017E84;">Security Design & Hierarchy</h3>
+        <div class="oe_span12">
+            <p class="oe_mt32 text-justify">
+                The module defines a dedicated <b>Training Requests</b> security category with three implied groups:
+            </p>
+            <ul>
+                <li><b>Training Requester:</b> Base access to create, edit (in draft), submit, and view own requests.</li>
+                <li><b>Training Manager Approver:</b> Implies Requester access. Can approve or reject submitted requests for direct reports.</li>
+                <li><b>Training HR Approver:</b> Implies Manager Approver access. Final approval authority for all company training requests.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h3 class="oe_slogan" style="color:#017E84;">Workflow Enforcement & State Machine</h3>
+        <div class="oe_span12">
+            <p class="oe_mt32 text-justify">
+                The app implements a strict state machine to enforce business processes:
+            </p>
+            <table class="table table-bordered table-striped">
+                <thead style="background-color: #875A7B; color: white;">
+                    <tr>
+                        <th>From</th>
+                        <th>Action</th>
+                        <th>To</th>
+                        <th>Authorized User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Draft</td><td>Submit</td><td>Submitted</td><td>Request Owner</td></tr>
+                    <tr><td>Draft</td><td>Cancel</td><td>Cancelled</td><td>Request Owner</td></tr>
+                    <tr><td>Submitted</td><td>Approve</td><td>Manager Approved</td><td>Manager Approver</td></tr>
+                    <tr><td>Submitted</td><td>Reject</td><td>Rejected</td><td>Manager Approver</td></tr>
+                    <tr><td>Manager Approved</td><td>Final Approve</td><td>HR Approved</td><td>HR Approver</td></tr>
+                    <tr><td>Manager Approved</td><td>Reject</td><td>Rejected</td><td>HR Approver</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="oe_slogan" style="color:#017E84;">Key Features</h3>
+        <div class="oe_span6">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #875A7B; color: white;"><b>Multi-Company Support</b></div>
+                <div class="panel-body">Built using company-specific default parameters. Record rules enforce company boundaries for HR users automatically.</div>
+            </div>
+            <div class="panel panel-default mt-3">
+                <div class="panel-heading" style="background-color: #875A7B; color: white;"><b>Interactive Rejection Wizard</b></div>
+                <div class="panel-body">Requires non-empty feedback when rejecting a request, logging reasons directly into the Chatter notes.</div>
+            </div>
+        </div>
+        <div class="oe_span6">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #875A7B; color: white;"><b>Live-Related Organization Hierarchy</b></div>
+                <div class="panel-body">Manager fields automatically sync with HR configurations. Changing an employee's organizational manager updates routing instantly.</div>
+            </div>
+            <div class="panel panel-default mt-3">
+                <div class="panel-heading" style="background-color: #875A7B; color: white;"><b>Interactive OWL Dashboard</b></div>
+                <div class="panel-body">Responsive client action providing role-aware KPIs, actionable queue counters, and state distribution statistics.</div>
+            </div>
+        </div>
+    </div>
+</section>

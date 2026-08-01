@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hr_training_request.Dashboard">
+        <div class="o_hr_training_dashboard h-100 overflow-auto bg-view">
+            <div class="o_hr_training_dashboard__inner">
+                <div class="o_hr_training_dashboard__header">
+                    <div>
+                        <h2 class="o_hr_training_dashboard__title" t-out="roleTitle"/>
+                        <div class="text-muted">
+                            <t t-if="state.data.current_employee">
+                                <t t-out="state.data.current_employee.name"/>
+                            </t>
+                            <t t-else="">Training request workspace</t>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-light" type="button" t-on-click="loadDashboard">
+                            <i class="fa fa-refresh me-1"/> Refresh
+                        </button>
+                        <button class="btn btn-primary" type="button" t-on-click="createRequest">
+                            <i class="fa fa-plus me-1"/> New Request
+                        </button>
+                    </div>
+                </div>
+
+                <t t-if="state.loading">
+                    <div class="o_hr_training_dashboard__loading">
+                        <i class="fa fa-circle-o-notch fa-spin me-2"/> Loading dashboard
+                    </div>
+                </t>
+
+                <t t-else="">
+                    <div class="o_hr_training_dashboard__kpis">
+                        <button t-foreach="kpis" t-as="kpi" t-key="kpi.label"
+                                type="button"
+                                class="o_hr_training_dashboard__kpi"
+                                t-att-class="'o_hr_training_dashboard__kpi--' + kpi.tone"
+                                t-att-data-domain-key="kpi.domainKey"
+                                t-on-click="openDomainFromEvent">
+                            <span class="o_hr_training_dashboard__kpi_label" t-out="kpi.label"/>
+                            <span class="o_hr_training_dashboard__kpi_value" t-out="kpi.value"/>
+                        </button>
+                    </div>
+
+                    <div class="o_hr_training_dashboard__grid">
+                        <section class="o_hr_training_dashboard__panel">
+                            <div class="o_hr_training_dashboard__panel_header">
+                                <h3 t-out="actionTitle"/>
+                                <button class="btn btn-link btn-sm p-0" type="button"
+                                        t-att-data-domain-key="state.data.roles.is_hr_approver ? 'hr_queue' : state.data.roles.is_manager_approver ? 'manager_queue' : 'my_requests'"
+                                        t-on-click="openDomainFromEvent">
+                                    Open list
+                                </button>
+                            </div>
+                            <div t-if="!state.data.action_requests.length" class="o_hr_training_dashboard__empty">
+                                No active items in this queue.
+                            </div>
+                            <button t-foreach="state.data.action_requests" t-as="request" t-key="request.id"
+                                    type="button"
+                                    class="o_hr_training_dashboard__request"
+                                    t-att-data-res-id="request.id"
+                                    t-on-click="openRecord">
+                                <div>
+                                    <div class="o_hr_training_dashboard__request_title" t-out="request.course_name"/>
+                                    <div class="text-muted">
+                                        <t t-out="request.employee_id[1]"/>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <span class="o_hr_training_dashboard__badge"
+                                          t-att-class="'o_hr_training_dashboard__badge--' + stateClass(request.state)"
+                                          t-out="stateLabel(request.state)"/>
+                                    <div class="text-muted">
+                                        <t t-out="formatDate(request.start_date)"/>
+                                    </div>
+                                </div>
+                            </button>
+                        </section>
+
+                        <section class="o_hr_training_dashboard__panel">
+                            <div class="o_hr_training_dashboard__panel_header">
+                                <h3>Workflow status</h3>
+                                <button class="btn btn-link btn-sm p-0" type="button"
+                                        data-domain-key="all"
+                                        t-on-click="openDomainFromEvent">
+                                    All visible
+                                </button>
+                            </div>
+                            <div class="o_hr_training_dashboard__status_rows">
+                                <button t-foreach="stateRows" t-as="row" t-key="row.key"
+                                        type="button"
+                                        class="o_hr_training_dashboard__status_row"
+                                        t-att-data-domain-key="row.key === 'manager_approved' ? 'hr_queue' : row.key === 'hr_approved' ? 'approved' : row.key === 'rejected' || row.key === 'cancelled' ? 'closed' : 'all'"
+                                        t-on-click="openDomainFromEvent">
+                                    <span>
+                                        <span class="o_hr_training_dashboard__dot"
+                                              t-att-class="'o_hr_training_dashboard__dot--' + row.className"/>
+                                        <t t-out="row.label"/>
+                                    </span>
+                                    <strong t-out="row.count"/>
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="o_hr_training_dashboard__panel o_hr_training_dashboard__panel--wide">
+                            <div class="o_hr_training_dashboard__panel_header">
+                                <h3>Recent visible requests</h3>
+                                <span class="text-muted">
+                                    <t t-out="state.data.visible_total"/> total
+                                </span>
+                            </div>
+                            <div class="o_hr_training_dashboard__recent">
+                                <button t-foreach="state.data.recent_requests" t-as="request" t-key="request.id"
+                                        type="button"
+                                        class="o_hr_training_dashboard__recent_row"
+                                        t-att-data-res-id="request.id"
+                                        t-on-click="openRecord">
+                                    <span class="o_hr_training_dashboard__recent_course" t-out="request.course_name"/>
+                                    <span t-out="request.employee_id[1]"/>
+                                    <span t-out="formatDate(request.start_date)"/>
+                                    <span class="o_hr_training_dashboard__badge"
+                                          t-att-class="'o_hr_training_dashboard__badge--' + stateClass(request.state)"
+                                          t-out="stateLabel(request.state)"/>
+                                </button>
+                                <div t-if="!state.data.recent_requests.length" class="o_hr_training_dashboard__empty">
+                                    No visible requests yet.
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

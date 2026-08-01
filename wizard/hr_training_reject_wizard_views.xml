@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_training_reject_wizard_form" model="ir.ui.view">
+            <field name="name">hr.training.reject.wizard.form</field>
+            <field name="model">hr.training.reject.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Reject Training Request">
+                    <group>
+                        <field name="training_request_id" invisible="1"/>
+                        <field name="rejection_reason" placeholder="Please provide a reason for rejection..." widget="text"/>
+                    </group>
+                    <footer>
+                        <button name="action_confirm_reject" string="Confirm Reject" type="object" class="btn-danger"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_hr_training_reject_wizard" model="ir.actions.act_window">
+            <field name="name">Reject Training Request</field>
+            <field name="res_model">hr.training.reject.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

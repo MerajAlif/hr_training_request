@@ -1,0 +1,263 @@
+.o_hr_training_dashboard {
+    --training-border: #d8dee8;
+    --training-panel: #ffffff;
+    --training-soft: #f6f8fb;
+    --training-text: #1f2937;
+
+    color: var(--training-text);
+
+    .o_hr_training_dashboard__inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .o_hr_training_dashboard__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .o_hr_training_dashboard__title {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 650;
+    }
+
+    .o_hr_training_dashboard__loading,
+    .o_hr_training_dashboard__panel {
+        border: 1px solid var(--training-border);
+        border-radius: 8px;
+        background: var(--training-panel);
+    }
+
+    .o_hr_training_dashboard__loading {
+        padding: 28px;
+        text-align: center;
+    }
+
+    .o_hr_training_dashboard__kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .o_hr_training_dashboard__kpi {
+        min-height: 96px;
+        padding: 14px;
+        border: 1px solid var(--training-border);
+        border-left: 4px solid #8f9bad;
+        border-radius: 8px;
+        background: var(--training-panel);
+        text-align: left;
+    }
+
+    .o_hr_training_dashboard__kpi--info {
+        border-left-color: #3b82f6;
+    }
+
+    .o_hr_training_dashboard__kpi--warning {
+        border-left-color: #f59e0b;
+    }
+
+    .o_hr_training_dashboard__kpi--success {
+        border-left-color: #10b981;
+    }
+
+    .o_hr_training_dashboard__kpi--danger {
+        border-left-color: #ef4444;
+    }
+
+    .o_hr_training_dashboard__kpi_label {
+        display: block;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .o_hr_training_dashboard__kpi_value {
+        display: block;
+        margin-top: 10px;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .o_hr_training_dashboard__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+        gap: 16px;
+    }
+
+    .o_hr_training_dashboard__panel {
+        padding: 16px;
+    }
+
+    .o_hr_training_dashboard__panel--wide {
+        grid-column: 1 / -1;
+    }
+
+    .o_hr_training_dashboard__panel_header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+
+        h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 650;
+        }
+    }
+
+    .o_hr_training_dashboard__request,
+    .o_hr_training_dashboard__status_row,
+    .o_hr_training_dashboard__recent_row {
+        width: 100%;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+    }
+
+    .o_hr_training_dashboard__request {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px;
+        border-top: 1px solid var(--training-border);
+    }
+
+    .o_hr_training_dashboard__request:hover,
+    .o_hr_training_dashboard__status_row:hover,
+    .o_hr_training_dashboard__recent_row:hover,
+    .o_hr_training_dashboard__kpi:hover {
+        background: var(--training-soft);
+    }
+
+    .o_hr_training_dashboard__request_title,
+    .o_hr_training_dashboard__recent_course {
+        font-weight: 600;
+    }
+
+    .o_hr_training_dashboard__badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 22px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: #e5e7eb;
+        color: #374151;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .o_hr_training_dashboard__badge--info {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .o_hr_training_dashboard__badge--warning {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .o_hr_training_dashboard__badge--success {
+        background: #d1fae5;
+        color: #047857;
+    }
+
+    .o_hr_training_dashboard__badge--danger {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .o_hr_training_dashboard__status_rows {
+        display: grid;
+        gap: 8px;
+    }
+
+    .o_hr_training_dashboard__status_row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .o_hr_training_dashboard__dot {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        margin-right: 8px;
+        border-radius: 999px;
+        background: #94a3b8;
+    }
+
+    .o_hr_training_dashboard__dot--info {
+        background: #3b82f6;
+    }
+
+    .o_hr_training_dashboard__dot--warning {
+        background: #f59e0b;
+    }
+
+    .o_hr_training_dashboard__dot--success {
+        background: #10b981;
+    }
+
+    .o_hr_training_dashboard__dot--danger {
+        background: #ef4444;
+    }
+
+    .o_hr_training_dashboard__recent {
+        display: grid;
+        gap: 6px;
+    }
+
+    .o_hr_training_dashboard__recent_row {
+        display: grid;
+        grid-template-columns: minmax(180px, 1.3fr) minmax(140px, 0.8fr) minmax(96px, 0.5fr) auto;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-top: 1px solid var(--training-border);
+    }
+
+    .o_hr_training_dashboard__empty {
+        padding: 16px;
+        border-radius: 6px;
+        background: var(--training-soft);
+        color: #64748b;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .o_hr_training_dashboard__inner {
+            padding: 12px;
+        }
+
+        .o_hr_training_dashboard__header,
+        .o_hr_training_dashboard__grid {
+            display: block;
+        }
+
+        .o_hr_training_dashboard__header > .d-flex {
+            margin-top: 12px;
+        }
+
+        .o_hr_training_dashboard__panel {
+            margin-bottom: 12px;
+        }
+
+        .o_hr_training_dashboard__recent_row {
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+    }
+}
