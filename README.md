@@ -87,6 +87,6 @@ I used Claude as an AI pair-programming aid during development — mainly for sc
 ## What I'd Improve With More Time
 
 - Add automated activity notifications sent to managers upon submission and HR upon manager approval.
-- Add budget policy thresholds (e.g. require executive approval for training exceeding $5,000).
+- Add budget policy thresholds (e.g. require executive approval for training exceeding 5,000).
 - Implement training completion certificate attachment handling upon `hr_approved` stage.
 - Explore an optional AI-assisted review layer (e.g., flagging requests where the justification, course, and cost look inconsistent) as decision support for managers/HR — deliberately left out here to avoid over-engineering a scoped assignment.
