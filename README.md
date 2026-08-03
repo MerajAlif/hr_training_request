@@ -65,12 +65,12 @@ stateDiagram-v2
 - **Monetary vs Float for Cost**: `cost` uses `fields.Monetary` tied to `currency_id` for accurate financial representation.
 - **Unlink Access Policy**: Business users cannot unlink/delete training requests; they must use cancellation to maintain an immutable audit trail.
 
-## Considered But Not Implemented (Scope Discipline)
+## Scope
 
 - **Course & Provider Master Data Catalog**: Kept as plain user-entered `Char` fields (`course_name`, `training_provider`) as requested by the specification, avoiding unnecessary master data management overhead for one-off external vendor requests.
 - **Reset to Draft Transition**: Deliberately omitted to prevent state history manipulation and preserve audit trail integrity once a request is processed or rejected.
 
-## Bonus Additions (Self-Initiated Scope Enhancements)
+## Additions (Self-Initiated Scope)
 
 - **Rejection Wizard (`hr.training.reject.wizard`)**: Interactive modal requiring non-empty user feedback when rejecting a request, logging reasons directly to chatter notes.
 - **Interactive OWL Dashboard**: Responsive client action providing role-aware KPIs, actionable queue counters, and state distribution stats.
@@ -80,8 +80,13 @@ stateDiagram-v2
 
 Full automated verification of security boundaries and state machine correctness — see [TEST_RESULTS.md](./TEST_RESULTS.md).
 
+## Development Approach
+
+I used Claude as an AI pair-programming aid during development — mainly for scaffolding boilerplate (view XML, test fixtures). Every security decision, ORM guard, and test case in this repo was reviewed, verified; AI was a productivity multiplier, not a substitute for understanding the Odoo security model.
+
 ## What I'd Improve With More Time
 
 - Add automated activity notifications sent to managers upon submission and HR upon manager approval.
 - Add budget policy thresholds (e.g. require executive approval for training exceeding $5,000).
 - Implement training completion certificate attachment handling upon `hr_approved` stage.
+- Explore an optional AI-assisted review layer (e.g., flagging requests where the justification, course, and cost look inconsistent) as decision support for managers/HR — deliberately left out here to avoid over-engineering a scoped assignment.
